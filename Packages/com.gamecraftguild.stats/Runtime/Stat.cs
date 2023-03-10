@@ -9,7 +9,6 @@ namespace GameCraftGuild.Stats {
     /// <remarks>
     /// The type for value (and any associated functions) should be changed from "float" to "INumerics" once Unity supports .NET 7 and generic math. This should be possible without any major refactoring of Stat or StatBlock, but I'm not 100% confident.
     /// </remarks>
-    /// <typeparam name="T">Value type of the stat.</typeparam>
     public class Stat {
 
         /// <summary>
