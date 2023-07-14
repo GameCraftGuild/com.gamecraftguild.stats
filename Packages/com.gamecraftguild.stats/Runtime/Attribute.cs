@@ -8,7 +8,7 @@ namespace GameCraftGuild.Stats {
     /// <summary>
     /// Individual attribute.
     /// </summary>
-    public struct Attribute {
+    public struct Attribute : IEquatable<Attribute> {
 
         /// <summary>
         /// Name of the attribute.
@@ -70,53 +70,13 @@ namespace GameCraftGuild.Stats {
         }
 
         /// <summary>
-        /// Subtract two attributes with the same name.
-        /// </summary>
-        /// <param name="a">First attribute.</param>
-        /// <param name="b">Second attribute.</param>
-        /// <returns>A new attribute with the same name and the values of <paramref name="a"/> and <paramref name="b"/> subtracted.</returns>
-        /// <exception cref="ArgumentException">Thrown when <paramref name="a"/> and <paramref name="b"/> have different names.</exception>
-        public static Attribute operator -(Attribute a, Attribute b) {
-            if (b.name != a.name) throw new ArgumentException(string.Format("{0} has a different name than {1} so they cannot be added.", a, b));
-
-            return new Attribute(a.name, a.value - b.value);
-        }
-
-        /// <summary>
-        /// Multiply two attributes with the same name.
-        /// </summary>
-        /// <param name="a">First attribute.</param>
-        /// <param name="b">Second attribute.</param>
-        /// <returns>A new attribute with the same name and the values of <paramref name="a"/> and <paramref name="b"/> multiplied.</returns>
-        /// <exception cref="ArgumentException">Thrown when <paramref name="a"/> and <paramref name="b"/> have different names.</exception>
-        public static Attribute operator *(Attribute a, Attribute b) {
-            if (b.name != a.name) throw new ArgumentException(string.Format("{0} has a different name than {1} so they cannot be added.", a, b));
-
-            return new Attribute(a.name, a.value * b.value);
-        }
-
-        /// <summary>
-        /// Divide two attributes with the same name.
-        /// </summary>
-        /// <param name="a">First attribute.</param>
-        /// <param name="b">Second attribute.</param>
-        /// <returns>A new attribute with the same name and the value of <paramref name="a"/> divided by <paramref name="b"/>.</returns>
-        /// <exception cref="ArgumentException">Thrown when <paramref name="a"/> and <paramref name="b"/> have different names.</exception>
-        public static Attribute operator /(Attribute a, Attribute b) {
-            if (b.name != a.name) throw new ArgumentException(string.Format("{0} has a different name than {1} so they cannot be added.", a, b));
-
-            return new Attribute(a.name, a.value / b.value);
-        }
-
-        /// <summary>
         /// Check if the attribtues are equal. Equal attributes have the same name and value.
         /// </summary>
         /// <param name="a">First attribute.</param>
         /// <param name="b">Second attribute.</param>
         /// <returns>True if the attributes are equal, false if the attributes are not equal.</returns>
         public static bool operator ==(Attribute a, Attribute b) {
-            if (a.name == b.name && a.value == b.value) return true;
-            return false;
+            return a.Equals(b);
         }
 
         /// <summary>
@@ -126,7 +86,16 @@ namespace GameCraftGuild.Stats {
         /// <param name="b">Second attribute.</param>
         /// <returns>True if the attributes are not equal and false if the attributes are equal.</returns>
         public static bool operator !=(Attribute a, Attribute b) {
-            if (a.name != b.name || a.value != b.value) return true;
+            return !(a.Equals(b));
+        }
+
+        /// <summary>
+        /// Check if two attributes are equal. Equal attributes have the same name and value.
+        /// </summary>
+        /// <param name="other">Attribute to combare this attribute to.</param>
+        /// <returns>True if the attributes are equal, false otherwise.</returns>
+        public bool Equals(Attribute other) {
+            if (other != null && this.name == other.name && this.value == other.value) return true;
             return false;
         }
 
@@ -136,8 +105,7 @@ namespace GameCraftGuild.Stats {
         /// <param name="obj">Object to compare the attribute to.</param>
         /// <returns>True if the attributes are equal, false otherwise.</returns>
         public override bool Equals(object obj) {
-            if (obj is Attribute) return this == (Attribute)obj;
-            return false;
+            return obj is Attribute && Equals((Attribute)obj);
         }
 
         /// <summary>
