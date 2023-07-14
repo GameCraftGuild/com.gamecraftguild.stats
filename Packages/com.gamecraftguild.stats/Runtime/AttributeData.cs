@@ -19,9 +19,9 @@ namespace GameCraftGuild.Stats {
         public static AttributeData CombineAttributeData (AttributeData baseData, AttributeData combiningData) {
             if (baseData == null || combiningData == null) return null;
 
-            AttributeData combinedData = new AttributeData(baseData.attributes.Values.ToList());
+            AttributeData combinedData = new AttributeData(baseData.attributes.Values);
 
-            foreach (Attribute attribute in combiningData.attributes.Values.ToList()) {
+            foreach (Attribute attribute in combiningData.attributes.Values) {
                 if (!combinedData.CombineAttribute(attribute)) combinedData.AddAttribute(attribute);
             }
 
@@ -34,13 +34,13 @@ namespace GameCraftGuild.Stats {
         /// <param name="baseData">Base data.</param>
         /// <param name="combiningData">List of data to combine.</param>
         /// <returns>Combined data.</returns>
-        public static AttributeData CombineAttributeData (AttributeData baseData, List<AttributeData> combiningData) {
+        public static AttributeData CombineAttributeData (AttributeData baseData, ICollection<AttributeData> combiningData) {
             if (baseData == null || combiningData == null || combiningData.Count == 0) return null;
 
-            AttributeData combinedData = CombineAttributeData(baseData, combiningData[0]);
+            AttributeData combinedData = new AttributeData(baseData.attributes.Values);
 
-            for (int i = 0; i < combiningData.Count; i++) {
-                combinedData = CombineAttributeData(combinedData, combiningData[i]);
+            foreach (AttributeData data in combiningData) {
+                combinedData = CombineAttributeData(combinedData, data);
             }
 
             return combinedData;
@@ -62,7 +62,7 @@ namespace GameCraftGuild.Stats {
         /// Create a new AttributeData based off a list of attributes.
         /// </summary>
         /// <param name="initialAttributes">IniitialAttributes.</param>
-        public AttributeData(List<Attribute> initialAttributes) {
+        public AttributeData(ICollection<Attribute> initialAttributes) {
             foreach (Attribute attribute in initialAttributes) {
                 AddAttribute(attribute);
             }

@@ -13,30 +13,12 @@ namespace GameCraftGuild.Stats {
         /// <summary>
         /// Name of the attribute.
         /// </summary>
-        private string name;
-
-        /// <summary>
-        /// Name of the attribute.
-        /// </summary>
-        public string Name {
-            get {
-                return name;
-            }
-        }
+        public string Name;
 
         /// <summary>
         /// Value of the attribute.
         /// </summary>
-        private float value;
-
-        /// <summary>
-        /// Value of the attribute.
-        /// </summary>
-        public float Value {
-            get {
-                return value;
-            }
-        }
+        public float Value;
 
         /// <summary>
         /// Attribute constructor.
@@ -44,8 +26,8 @@ namespace GameCraftGuild.Stats {
         /// <param name="name">Name of the attribute.</param>
         /// <param name="value">Value of the attribute.</param>
         public Attribute (string name, float value) {
-            this.name = name;
-            this.value = value;
+            this.Name = name;
+            this.Value = value;
         }
 
         /// <summary>
@@ -53,7 +35,7 @@ namespace GameCraftGuild.Stats {
         /// </summary>
         /// <returns>"Attribute(name: value)"</returns>
         public override string ToString () {
-            return String.Format("Attribute({0}: {1})", name, value);
+            return $"Attribute({Name}: {Value})";
         }
 
         /// <summary>
@@ -64,9 +46,9 @@ namespace GameCraftGuild.Stats {
         /// <returns>A new attribute with the same name and the values of <paramref name="a"/> and <paramref name="b"/> added.</returns>
         /// <exception cref="ArgumentException">Thrown when <paramref name="a"/> and <paramref name="b"/> have different names.</exception>
         public static Attribute operator +(Attribute a, Attribute b) {
-            if (b.name != a.name) throw new ArgumentException(string.Format("{0} has a different name than {1} so they cannot be added.", a, b));
+            if (b.Name != a.Name) throw new ArgumentException($"{a} has a different name than {b} so they cannot be added.");
 
-            return new Attribute(a.name, a.value + b.value);
+            return new Attribute(a.Name, a.Value + b.Value);
         }
 
         /// <summary>
@@ -95,7 +77,7 @@ namespace GameCraftGuild.Stats {
         /// <param name="other">Attribute to combare this attribute to.</param>
         /// <returns>True if the attributes are equal, false otherwise.</returns>
         public bool Equals(Attribute other) {
-            if (other != null && this.name == other.name && this.value == other.value) return true;
+            if (other != null && this.Name == other.Name && this.Value == other.Value) return true;
             return false;
         }
 
@@ -113,7 +95,7 @@ namespace GameCraftGuild.Stats {
         /// </summary>
         /// <returns>Hash code for the attribute.</returns>
         public override int GetHashCode () {
-            return (name + value).GetHashCode();
+            return (Name + Value).GetHashCode();
         }
 
     }
